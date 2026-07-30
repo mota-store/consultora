@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../_core/trpc";
+import { faqItems, getOperadoraInfo, getOperadoraRules, getFAQResponse, operadorasInfo } from "../knowledge-base";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -29,6 +30,11 @@ export const taliaRouter = router({
     .mutation(async ({ input }) => {
       try {
         // Sistema prompt para a Tália
+        // Construir sistema prompt com base de conhecimento
+        const operadorasContext = Object.entries(operadorasInfo)
+          .map(([_, op]) => `- ${op.nome}: ${op.descricao}`)
+          .join("\n");
+
         const systemPrompt = `Você é Tália, uma assistente IA humanizada e amigável que trabalha para Talita Motta, consultora especializada em planos de saúde. 
 
 Características:
@@ -39,11 +45,14 @@ Características:
 - Sempre seja empático e profissional
 - Responda em português brasileiro
 
-Regras importantes sobre operadoras:
-- Bradesco: Exige CNPJ ativo há pelo menos 6 meses e mínimo de 3 vidas
-- Hapvida: Aceita planos individuais e coletivos
-- Hospital Amazônia: Referência regional em Belém
-- Hospital Adventista: Qualidade e confiabilidade
+Operadoras parceiras:
+${operadorasContext}
+
+Se o cliente perguntar sobre:
+- Carência: Explique que é o período de espera entre contratação e cobertura
+- Coparticipação: Explique que é a porcentagem que o cliente paga
+- Tipos de plano: Mencione individual, familiar e coletivo
+- Doenças pré-existentes: Diga que pode contratar, mas pode haver carência específ ica
 
 Você está na etapa ${input.context.step + 1} de ${input.context.totalSteps}.`;
 
@@ -143,5 +152,37 @@ Você está na etapa ${input.context.step + 1} de ${input.context.totalSteps}.`;
             message: input.value.length > 0 ? "Válido ✅" : "Campo não pode estar vazio",
           };
       }
+    }),
+
+  // Obter resposta de FAQ
+  getFAQ: publicProcedure
+    .input(
+      z.object({
+        pergunta: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const resposta = getFAQResponse(input.pergunta);
+      return {
+        encontrado: resposta !== null,
+        resposta: resposta || "Desculpe, não encontrei uma resposta para essa pergunta. Fale com a Talita no WhatsApp!",
+      };
+    }),
+
+  // Obter informações de operadora
+  getOperadora: publicProcedure
+    .input(
+      z.object({
+        nome: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const operadora = getOperadoraInfo(input.nome);
+      const regras = getOperadoraRules(input.nome);
+      return {
+        encontrado: operadora !== null,
+        operadora,
+        regras,
+      };
     }),
 });

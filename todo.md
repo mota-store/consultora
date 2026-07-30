@@ -13,15 +13,16 @@
 - [x] Sistema de coleta progressiva de informações
 - [x] Persona humanizada com emojis
 - [x] Fluxo de perguntas: nome → telefone → intenção → beneficiário → idades → motivo → operadora → pré-existentes → abrangência → rede → preço
-- [ ] Base de conhecimento sobre operadoras (Bradesco: CNPJ 6 meses + 3 vidas mín, etc)
-- [ ] Respostas a dúvidas frequentes (carência, coparticipação, tipos de plano)
+- [x] Base de conhecimento sobre operadoras (Bradesco: CNPJ 6 meses + 3 vidas mín, etc)
+- [x] Respostas a dúvidas frequentes (carência, coparticipação, tipos de plano)
 - [x] Validação: nunca citar preços, nunca garantir aceitação de pré-existentes
 - [x] Armazenamento de conversas no banco de dados
 - [x] Redirecionamento automático para WhatsApp com mensagem pré-preenchida
+- [x] Endpoints de FAQ e informações de operadora
 
 ## Dashboard Administrativo
 - [x] Página de login (consultora)
-- [x] Autenticação simples (usuário/senha)
+- [x] Autenticação segura com bcryptjs (usuário/senha)
 - [x] Lista de leads com status (Novo Contato, Em Negociação, Fechado, Em Acompanhamento)
 - [x] Visualização de detalhes da conversa por lead
 - [x] Botão de acesso rápido ao WhatsApp do cliente
@@ -48,5 +49,5 @@
 ## Deploy
 - [x] Configuração de variáveis de ambiente
 - [x] Commit inicial no GitHub
-- [ ] Documentação README.md
-- [ ] Instruções de setup local
+- [x] Documentação README.md
+- [x] Instruções de setup local e Render
