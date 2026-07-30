@@ -158,7 +158,7 @@ export default function Home() {
                 key={op.name}
                 className="p-6 border-2 border-primary/10 hover:border-primary/30 transition text-center"
               >
-                <div className="w-full h-48 bg-white dark:bg-slate-800 rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-48 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-700 rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
                   <img src={op.logo} alt={op.name} className="max-h-full max-w-full object-contain" />
                 </div>
                 <h3 className="font-semibold text-primary mb-2">{op.name}</h3>
@@ -233,7 +233,7 @@ export default function Home() {
             <Button
             onClick={() => setShowChat(true)}
             size="lg"
-            className="bg-white hover:bg-white/90 dark:bg-slate-200 dark:hover:bg-slate-300 dark:text-slate-900 text-primary w-full md:w-auto"
+            className="bg-white hover:bg-slate-50 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-950 text-primary font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all"
           >
             Falar com Tália Agora 🤖
           </Button>
