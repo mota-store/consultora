@@ -7,7 +7,6 @@ import path from "path";
 export async function setupVite(app: Express, server: Server) {
   // Lazy-load Vite only in development to avoid bundling it in production
   const { createServer: createViteServer } = await import("vite");
-  const viteConfig = (await import("../../vite.config")).default;
 
   const serverOptions = {
     middlewareMode: true,
@@ -15,11 +14,13 @@ export async function setupVite(app: Express, server: Server) {
     allowedHosts: true as const,
   };
 
+  // Use minimal config without importing viteConfig (which has dev-only plugins)
   const vite = await createViteServer({
-    ...viteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom",
+    root: path.resolve(import.meta.dirname, "../..", "client"),
+    publicDir: path.resolve(import.meta.dirname, "../..", "client", "public"),
   });
 
   app.use(vite.middlewares);
