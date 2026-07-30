@@ -44,15 +44,15 @@ export default function Home() {
   const whatsappLink = "https://wa.me/5591983070 32?text=Ol%C3%A1%20Talita%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20planos%20de%20sa%C3%BAde";
 
   return (
-    <div className="min-h-screen bg-white text-foreground">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-foreground">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-border">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-border">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2 min-w-0">
             <img src={IMAGE_LOGO} alt="Protection Life" className="w-8 h-8 flex-shrink-0" />
             <div className="min-w-0">
               <span className="text-lg md:text-xl font-bold text-primary block truncate">Protection Life</span>
-              <p className="text-xs text-foreground/60">por Talita Motta</p>
+              <p className="text-xs text-foreground/80 dark:text-foreground/90">por Talita Motta</p>
             </div>
           </div>
           <div className="flex items-center gap-2 md:gap-4 flex-wrap justify-end">
@@ -86,7 +86,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-12 md:py-20">
+      <section className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-slate-900 dark:to-slate-800 py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div>
@@ -110,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef.ref} className={`py-12 md:py-16 bg-white transition-all duration-700 ${featuresRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <section ref={featuresRef.ref} className={`py-12 md:py-16 bg-white dark:bg-slate-950 transition-all duration-700 ${featuresRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Por que escolher a Talita Motta?
@@ -142,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* Operadoras Section */}
-      <section ref={operadorasRef.ref} id="operadoras" className={`py-12 md:py-16 bg-primary/5 transition-all duration-700 ${operadorasRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <section ref={operadorasRef.ref} id="operadoras" className={`py-12 md:py-16 bg-primary/5 dark:bg-slate-900 transition-all duration-700 ${operadorasRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Operadoras Parceiras
@@ -158,7 +158,7 @@ export default function Home() {
                 key={op.name}
                 className="p-6 border-2 border-primary/10 hover:border-primary/30 transition text-center"
               >
-                <div className="w-full h-48 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-48 bg-white dark:bg-slate-800 rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
                   <img src={op.logo} alt={op.name} className="max-h-full max-w-full object-contain" />
                 </div>
                 <h3 className="font-semibold text-primary mb-2">{op.name}</h3>
@@ -170,7 +170,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section ref={testimonialsRef.ref} id="depoimentos" className={`py-12 md:py-16 bg-white transition-all duration-700 ${testimonialsRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <section ref={testimonialsRef.ref} id="depoimentos" className={`py-12 md:py-16 bg-white dark:bg-slate-950 transition-all duration-700 ${testimonialsRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             O que nossos clientes dizem
@@ -224,16 +224,16 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-primary text-white">
+      <section className="py-12 md:py-16 bg-primary dark:bg-primary/90 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Pronto para encontrar seu plano?</h2>
           <p className="text-base md:text-lg mb-6 md:mb-8 text-white/90">
             Converse com a Tália agora e descubra as melhores opções para você! 💙
           </p>
-          <Button
+            <Button
             onClick={() => setShowChat(true)}
             size="lg"
-            className="bg-white hover:bg-white/90 text-primary w-full md:w-auto"
+            className="bg-white hover:bg-white/90 dark:bg-slate-200 dark:hover:bg-slate-300 dark:text-slate-900 text-primary w-full md:w-auto"
           >
             Falar com Tália Agora 🤖
           </Button>
@@ -241,8 +241,8 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary/10 border-t border-border py-6 md:py-8">
-        <div className="container mx-auto px-4 text-center text-foreground/70">
+      <footer className="bg-primary/10 dark:bg-slate-900 border-t border-border py-6 md:py-8">
+        <div className="container mx-auto px-4 text-center text-foreground/70 dark:text-foreground/80">
           <p className="text-sm md:text-base">© 2026 Protection Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
           <p className="text-xs md:text-sm mt-2">Especialista: Talita Motta | Disponível 24/7 para ajudar você! 💙</p>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-xs md:text-sm mt-3 inline-block">
