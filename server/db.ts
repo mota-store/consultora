@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, leads, InsertLead, conversas, InsertConversa, consultoras } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,65 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Leads
+export async function createLead(data: InsertLead) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(leads).values(data);
+  return result;
+}
+
+export async function getLeadById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.select().from(leads).where(eq(leads.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getAllLeads() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.select().from(leads).orderBy(desc(leads.createdAt));
+}
+
+export async function updateLeadStatus(id: number, status: "novo" | "negociacao" | "fechado" | "acompanhamento") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(leads).set({ status }).where(eq(leads.id, id));
+}
+
+export async function updateLead(id: number, data: Partial<InsertLead>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(leads).set(data).where(eq(leads.id, id));
+}
+
+// Conversas
+export async function createConversa(leadId: number, mensagem: string, remetente: "usuario" | "talia") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.insert(conversas).values({ leadId, mensagem, remetente });
+}
+
+export async function getConversasByLeadId(leadId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return await db.select().from(conversas).where(eq(conversas.leadId, leadId)).orderBy(conversas.timestamp);
+}
+
+// Consultoras
+export async function getConsultoraByEmail(email: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.select().from(consultoras).where(eq(consultoras.email, email)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getConsultoraById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.select().from(consultoras).where(eq(consultoras.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// TODO: add more feature queries here as your schema grows.
