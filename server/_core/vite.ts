@@ -11,7 +11,9 @@ export async function setupVite(app: Express, server: Server) {
   }
   
   // Lazy-load Vite only in development to avoid bundling it in production
-  const { createServer: createViteServer } = await import("vite");
+  // Use string concatenation to prevent esbuild from resolving this import
+  const viteName = "vi" + "te";
+  const { createServer: createViteServer } = await import(viteName);
 
   const serverOptions = {
     middlewareMode: true,
