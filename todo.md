@@ -37,12 +37,12 @@
 - [x] Tabela de usuários (consultora - login)
 - [x] Migrations SQL
 
-## Notificações
+## Notificações (Planejado para v2)
 - [ ] Sistema de notificação para novo lead (webhook ou polling)
 - [ ] Integração com WhatsApp Business API (opcional: notificação automática)
 
 ## Testes
-- [x] Testes unitários para lógica de coleta de dados (18 testes passando)
+- [x] Testes unitários para lógica de coleta de dados (33 testes passando)
 - [x] Testes de integração com OpenRouter
 - [x] Testes do fluxo de redirecionamento WhatsApp
 
