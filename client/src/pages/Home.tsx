@@ -64,7 +64,7 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <img 
-                src="/manus-storage/talia-assistant_6b407a5d.png" 
+                src="/manus-storage/talia-avatar_cc4ad09f.png" 
                 alt="Tália - Assistente de Consultoria" 
                 className="w-full max-w-xs md:max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
               />
