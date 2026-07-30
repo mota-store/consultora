@@ -214,8 +214,8 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-end justify-end p-4 z-50">
-      <Card className="w-full max-w-md h-[600px] flex flex-col bg-white border-2 border-primary shadow-2xl">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <Card className="w-full h-full max-w-4xl max-h-screen flex flex-col bg-white border-2 border-primary shadow-2xl">
         {/* Header */}
         <div className="bg-primary text-white p-4 flex items-center justify-between rounded-t-lg">
           <div className="flex items-center gap-2">
