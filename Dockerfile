@@ -34,7 +34,7 @@ RUN pnpm install --frozen-lockfile --prod || pnpm install --prod
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/client/dist ./client/dist
+COPY --from=builder /app/dist/public ./public
 COPY drizzle ./drizzle
 
 # Expose port
