@@ -3,37 +3,21 @@ import fs from "fs";
 import { type Server } from "http";
 import { nanoid } from "nanoid";
 import path from "path";
+import { createServer as createViteServer } from "vite";
+import viteConfig from "../../vite.config";
 
 export async function setupVite(app: Express, server: Server) {
-  // Guard: only load Vite in development
-  if (process.env.NODE_ENV !== "development") {
-    throw new Error("setupVite should only be called in development mode");
-  }
-  
-  // Lazy-load Vite only in development to avoid bundling it in production
-  let createViteServer: any;
-  try {
-    // Use dynamic import to avoid bundling vite in production
-    const viteModule = await import("vite");
-    createViteServer = viteModule.createServer;
-  } catch (error) {
-    console.error("Failed to load Vite module. This should only happen in development mode.", error);
-    throw error;
-  }
-
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
     allowedHosts: true as const,
   };
 
-  // Use minimal config without importing viteConfig (which has dev-only plugins)
   const vite = await createViteServer({
+    ...viteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom",
-    root: path.resolve(import.meta.dirname, "../..", "client"),
-    publicDir: path.resolve(import.meta.dirname, "../..", "client", "public"),
   });
 
   app.use(vite.middlewares);
