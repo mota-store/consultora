@@ -64,43 +64,34 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         try {
-          // Define the structured questions
-          const questions = [
-            "Qual é o seu NOME COMPLETO?",
-            "Qual é seu TELEFONE com WhatsApp?",
-            "Qual é sua IDADE?",
-            "Você já tem um plano de saúde? (sim/não)",
-            "Você quer COMPRAR um novo plano ou TROCAR o atual?",
-            "Tem alguma DÚVIDA que gostaria de esclarecer antes de prosseguir?",
-          ];
-
-          const step = input.context.step;
-          const isLastStep = step >= questions.length - 1;
-
-          // If this is the last step, prepare confirmation message
-          if (isLastStep) {
-            return {
-              message: "Perfeito! 🎉 Confirmei todas as suas informações. Estou repassando esses dados para a consultora Talita agora... Você será redirecionado para o WhatsApp dela em um momento! 💙",
-            };
-          }
-
-          // Get the next question
-          const nextQuestion = questions[step + 1];
-
           // Get OpenRouter API key from environment
           const apiKey = process.env.OPENROUTER_API_KEY;
           if (!apiKey) {
             throw new Error("OpenRouter API key not configured");
           }
 
-          // Create a system prompt to ensure Tália follows the structured flow
-          const systemPrompt = `Você é a Tália, assistente virtual da Talita Motta. Você está coletando informações de forma estruturada.
+          // Create a dynamic system prompt for emergent narrative
+          const systemPrompt = `Você é a Tália, assistente virtual da Talita Motta, especialista em consultoria de planos de saúde.
 
-Próxima pergunta a fazer: "${nextQuestion}"
+Seu objetivo é coletar informações sobre o cliente de forma NATURAL e CONVERSACIONAL:
+- Nome completo
+- Telefone com WhatsApp
+- Idade
+- Se já tem plano de saúde
+- Se quer comprar ou trocar de plano
+- Dúvidas ou necessidades específicas
 
-Responda de forma amigável, com emojis, mas SEMPRE faça a próxima pergunta da lista acima. Não desvie do fluxo.`;
+IMPORTANTE:
+- Seja amigável, use emojis naturalmente
+- Não repita informações já coletadas
+- Faça perguntas de forma natural e conversacional
+- Adapte suas respostas baseado no contexto
+- Se o usuário não tiver plano, não pergunte sobre trocar
+- Quando tiver todas as informações, confirme e finalize
+- Gere uma narrativa EMERGENTE, não um script rígido
+- Seja genuína e conversável, como uma pessoa real`;
 
-          // Call OpenRouter API
+          // Call OpenRouter API with emergent narrative approach
           const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -116,8 +107,8 @@ Responda de forma amigável, com emojis, mas SEMPRE faça a próxima pergunta da
                 },
                 ...input.messages,
               ],
-              temperature: 0.7,
-              max_tokens: 200,
+              temperature: 0.8,
+              max_tokens: 250,
             }),
           });
 
@@ -126,7 +117,7 @@ Responda de forma amigável, com emojis, mas SEMPRE faça a próxima pergunta da
           }
 
           const data = await response.json();
-          const message = data.choices?.[0]?.message?.content || nextQuestion;
+          const message = data.choices?.[0]?.message?.content || "Como posso ajudá-lo com planos de saúde?";
 
           return { message };
         } catch (error) {
