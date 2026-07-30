@@ -3,16 +3,15 @@ import { publicProcedure, router } from "../_core/trpc";
 import { getConsultoraByEmail, getDb } from "../db";
 import { consultoras } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
 
-// Função simples de hash (em produção, usar bcrypt)
-function hashPassword(password: string): string {
-  // Para desenvolvimento, usar um hash simples
-  // Em produção, SEMPRE usar bcrypt ou argon2
-  return Buffer.from(password).toString("base64");
+// Funções de hash seguro com bcryptjs
+async function hashPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, 10);
 }
 
-function verifyPassword(password: string, hash: string): boolean {
-  return hashPassword(password) === hash;
+async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return bcrypt.compare(password, hash);
 }
 
 export const consultoraRouter = router({
@@ -31,7 +30,8 @@ export const consultoraRouter = router({
         throw new Error("Consultora não encontrada");
       }
 
-      if (!verifyPassword(input.senha, consultora.senha)) {
+      const isPasswordValid = await verifyPassword(input.senha, consultora.senha);
+      if (!isPasswordValid) {
         throw new Error("Senha incorreta");
       }
 
@@ -65,7 +65,7 @@ export const consultoraRouter = router({
         throw new Error("Email já cadastrado");
       }
 
-      const senhaHash = hashPassword(input.senha);
+      const senhaHash = await hashPassword(input.senha);
 
       await db.insert(consultoras).values({
         nome: input.nome,

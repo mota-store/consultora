@@ -13,76 +13,69 @@ interface Message {
 }
 
 interface ChatData {
-  nome?: string;
-  telefone?: string;
-  intencaoTroca?: string;
-  beneficiario?: string;
-  idades?: string;
-  motivoBusca?: string;
-  preferenciasOperadora?: string;
-  condicoesPre?: string;
-  abrangencia?: string;
-  redeAmpla?: string;
-  criterioPreco?: string;
+  nome: string;
+  telefone: string;
+  intencaoTroca: string;
+  beneficiario: string;
+  idades: string;
+  motivoBusca: string;
+  preferenciasOperadora: string;
+  condicoesPre: string;
+  abrangencia: string;
+  redeAmpla: string;
+  criterioPreco: string;
 }
 
-const TALIA_RESPONSES: Record<string, string> = {
-  greeting: "Olá! 👋 Eu sou a Tália, assistente virtual da Talita Motta! 💙 Vou ajudar você a encontrar o melhor plano de saúde. Qual é o seu nome? 😊",
-  askPhone: "Muito prazer! 🤝 Qual é seu número de telefone? (com WhatsApp, por favor)",
-  askIntention: "Obrigada! 📱 Você já tem um plano de saúde e quer trocar? (sim/não)",
-  askBeneficiary: "Entendi! 🤔 O plano é para você mesmo ou para outra pessoa/família/empresa?",
-  askAges: "Legal! 👨‍👩‍👧‍👦 Qual é a idade de quem vai usar o plano? (Se for mais de uma pessoa, separe por vírgula)",
-  askMotive: "Perfeito! 🎯 Você está procurando um plano para um tratamento específico ou por segurança geral?",
-  askOperator: "Entendi! 🏥 Você tem alguma preferência de operadora (Hapvida, Bradesco, etc) ou quer ajuda para escolher?",
-  askPreExisting: "Ótimo! 💪 Você faz ou precisa de tratamento para alguma condição pré-existente? (diabetes, hipertensão, etc)",
-  askScope: "Certo! 🌍 Você prefere um plano nacional ou regional?",
-  askNetwork: "Entendido! 🏢 Você prefere uma rede ampla de hospitais e clínicas?",
-  askPrice: "Perfeito! 💰 O preço mais barato é um fator decisivo para você?",
-  closing: "Excelente! 🎉 Coletei todas as suas informações. Vou abrir o WhatsApp agora para você falar com a Talita e receber uma proposta personalizada! 💙✨",
-};
+const INITIAL_QUESTIONS = [
+  { key: "nome", prompt: "Qual é o seu nome?" },
+  { key: "telefone", prompt: "Qual é seu número de telefone? (com WhatsApp, por favor)" },
+  { key: "intencaoTroca", prompt: "Você já tem um plano de saúde e quer trocar? (sim/não)" },
+  { key: "beneficiario", prompt: "O plano é para você mesmo ou para outra pessoa/família/empresa?" },
+  { key: "idades", prompt: "Qual é a idade de quem vai usar o plano? (Se for mais de uma pessoa, separe por vírgula)" },
+  { key: "motivoBusca", prompt: "Você está procurando um plano para um tratamento específico ou por segurança geral?" },
+  { key: "preferenciasOperadora", prompt: "Você tem alguma preferência de operadora (Hapvida, Bradesco, etc) ou quer ajuda para escolher?" },
+  { key: "condicoesPre", prompt: "Você faz ou precisa de tratamento para alguma condição pré-existente? (diabetes, hipertensão, etc)" },
+  { key: "abrangencia", prompt: "Você prefere um plano nacional ou regional?" },
+  { key: "redeAmpla", prompt: "Você prefere uma rede ampla de hospitais e clínicas?" },
+  { key: "criterioPreco", prompt: "O preço mais barato é um fator decisivo para você?" },
+];
 
 export default function ChatInterface({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [chatData, setChatData] = useState<ChatData>({});
+  const [chatData, setChatData] = useState<Partial<ChatData>>({});
+  const [leadId, setLeadId] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const createLeadMutation = trpc.leads.create.useMutation();
   const updateLeadMutation = trpc.leads.update.useMutation();
-
-  const steps = [
-    "greeting",
-    "askPhone",
-    "askIntention",
-    "askBeneficiary",
-    "askAges",
-    "askMotive",
-    "askOperator",
-    "askPreExisting",
-    "askScope",
-    "askNetwork",
-    "askPrice",
-    "closing",
-  ];
+  const addMessageMutation = trpc.leads.addMessage.useMutation();
+  const taliaChatMutation = trpc.talia.chat.useMutation();
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   useEffect(() => {
-    // Iniciar conversa
-    const initialMessage: Message = {
-      id: "1",
-      text: TALIA_RESPONSES.greeting,
-      sender: "talia",
-      timestamp: new Date(),
-    };
-    setMessages([initialMessage]);
+    // Iniciar conversa com Tália
+    initializeChat();
   }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const initializeChat = async () => {
+    const greeting = "Olá! 👋 Eu sou a Tália, assistente virtual da Talita Motta! 💙 Vou ajudar você a encontrar o melhor plano de saúde. Qual é o seu nome? 😊";
+    const initialMessage: Message = {
+      id: "1",
+      text: greeting,
+      sender: "talia",
+      timestamp: new Date(),
+    };
+    setMessages([initialMessage]);
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -101,102 +94,109 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
     setIsLoading(true);
 
     try {
-      // Processar resposta baseada no step
-      const step = steps[currentStep];
-      let updatedData = { ...chatData };
-
-      switch (step) {
-        case "askPhone":
-          updatedData.nome = input;
-          break;
-        case "askIntention":
-          updatedData.telefone = input;
-          break;
-        case "askBeneficiary":
-          updatedData.intencaoTroca = input;
-          break;
-        case "askAges":
-          updatedData.beneficiario = input;
-          break;
-        case "askMotive":
-          updatedData.idades = input;
-          break;
-        case "askOperator":
-          updatedData.motivoBusca = input;
-          break;
-        case "askPreExisting":
-          updatedData.preferenciasOperadora = input;
-          break;
-        case "askScope":
-          updatedData.condicoesPre = input;
-          break;
-        case "askNetwork":
-          updatedData.abrangencia = input;
-          break;
-        case "askPrice":
-          updatedData.redeAmpla = input;
-          break;
-        case "closing":
-          updatedData.criterioPreco = input;
-          break;
-      }
-
+      // Atualizar dados coletados
+      const currentQuestion = INITIAL_QUESTIONS[currentStep];
+      const updatedData = {
+        ...chatData,
+        [currentQuestion.key]: input,
+      };
       setChatData(updatedData);
 
-      // Criar lead se é a primeira mensagem
-      if (currentStep === 1 && updatedData.nome) {
-        try {
-          await createLeadMutation.mutateAsync({
-            nome: updatedData.nome,
-            telefone: updatedData.telefone || "",
-            email: "",
-          });
-          sessionStorage.setItem("currentLeadId", "temp-" + Date.now());
-        } catch (err) {
-          console.error("Erro ao criar lead:", err);
-        }
+      // Criar lead na primeira mensagem
+      if (currentStep === 0 && !leadId) {
+        const result = await createLeadMutation.mutateAsync({
+          nome: input,
+          telefone: "",
+          email: "",
+        });
+        const newLeadId = (result as any)?.insertId || Math.random();
+        setLeadId(newLeadId);
       }
+
+      // Salvar mensagem do usuário
+      if (leadId) {
+        await addMessageMutation.mutateAsync({
+          leadId,
+          mensagem: input,
+          remetente: "usuario",
+        });
+      }
+
+      // Obter resposta da Tália via OpenRouter
+      const allMessages = messages.map((m) => ({
+        role: m.sender === "user" ? ("user" as const) : ("assistant" as const),
+        content: m.text,
+      }));
+      allMessages.push({
+        role: "user" as const,
+        content: input,
+      });
+
+      const taliaResponse = await taliaChatMutation.mutateAsync({
+        messages: allMessages,
+        context: {
+          step: currentStep,
+          totalSteps: INITIAL_QUESTIONS.length,
+        },
+      });
 
       // Próximo step
       const nextStep = currentStep + 1;
-      if (nextStep < steps.length) {
+      if (nextStep < INITIAL_QUESTIONS.length) {
         setCurrentStep(nextStep);
-        const nextStepKey = steps[nextStep];
-        const taliaResponse: Message = {
+        const nextQuestion = INITIAL_QUESTIONS[nextStep];
+        const taliaMessage: Message = {
           id: Date.now().toString() + "talia",
-          text: TALIA_RESPONSES[nextStepKey as keyof typeof TALIA_RESPONSES],
+          text: taliaResponse.message || nextQuestion.prompt,
           sender: "talia",
           timestamp: new Date(),
         };
-        setMessages((prev) => [...prev, taliaResponse]);
-      } else {
-        // Finalizar conversa e redirecionar para WhatsApp
-        const leadId = sessionStorage.getItem("currentLeadId");
+        setMessages((prev) => [...prev, taliaMessage]);
+
+        // Salvar mensagem da Tália
         if (leadId) {
-          try {
-            const dataToUpdate: Record<string, string> = {};
-            Object.entries(updatedData).forEach(([key, value]) => {
-              if (value) {
-                dataToUpdate[key] = String(value);
-              }
-            });
-            await updateLeadMutation.mutateAsync({
-              id: parseInt(leadId.replace("temp-", "")) || 1,
-              data: dataToUpdate,
-            });
-          } catch (err) {
-            console.error("Erro ao atualizar lead:", err);
-          }
+          await addMessageMutation.mutateAsync({
+            leadId,
+            mensagem: taliaResponse.message || nextQuestion.prompt,
+            remetente: "talia",
+          });
+        }
+      } else {
+        // Finalizar conversa
+        if (leadId) {
+          await updateLeadMutation.mutateAsync({
+            id: leadId,
+            data: updatedData as any,
+          });
         }
 
-        // Redirecionar para WhatsApp
-        const whatsappMessage = `Olá! Sou ${updatedData.nome}. Gostaria de mais informações sobre planos de saúde. Meu telefone é ${updatedData.telefone}.`;
+        // Montar mensagem final com todos os dados
+        const whatsappMessage = `Olá Talita! Sou ${updatedData.nome}. Gostaria de mais informações sobre planos de saúde. Meus dados:
+- Telefone: ${updatedData.telefone}
+- Intenção: ${updatedData.intencaoTroca}
+- Beneficiário: ${updatedData.beneficiario}
+- Idades: ${updatedData.idades}
+- Motivo: ${updatedData.motivoBusca}
+- Preferência: ${updatedData.preferenciasOperadora}
+- Condições: ${updatedData.condicoesPre}
+- Abrangência: ${updatedData.abrangencia}
+- Rede ampla: ${updatedData.redeAmpla}
+- Preço importante: ${updatedData.criterioPreco}`;
+
         const whatsappUrl = `https://wa.me/5591987654321?text=${encodeURIComponent(whatsappMessage)}`;
         window.open(whatsappUrl, "_blank");
-        
+
+        const closingMessage: Message = {
+          id: Date.now().toString() + "closing",
+          text: "Excelente! 🎉 Coletei todas as suas informações. Vou abrir o WhatsApp agora para você falar com a Talita e receber uma proposta personalizada! 💙✨",
+          sender: "talia",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, closingMessage]);
+
         setTimeout(() => {
           onClose();
-        }, 1000);
+        }, 2000);
       }
     } catch (error) {
       console.error("Erro:", error);
