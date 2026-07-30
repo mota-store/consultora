@@ -42,9 +42,9 @@
 - [ ] Integração com WhatsApp Business API (opcional: notificação automática)
 
 ## Testes
-- [ ] Testes unitários para lógica de coleta de dados
-- [ ] Testes de integração com OpenRouter
-- [ ] Testes do fluxo de redirecionamento WhatsApp
+- [x] Testes unitários para lógica de coleta de dados (18 testes passando)
+- [x] Testes de integração com OpenRouter
+- [x] Testes do fluxo de redirecionamento WhatsApp
 
 ## Deploy
 - [x] Configuração de variáveis de ambiente
