@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart, Shield, Users, CheckCircle2 } from "lucide-react";
+import { Heart, Shield, Users, CheckCircle2, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import ChatInterface from "@/components/ChatInterface";
 import { IMAGE_LOGO, IMAGE_TALIA, IMAGE_MARIA, IMAGE_JOAO, IMAGE_ANA, IMAGE_HAPVIDA, IMAGE_BRADESCO, IMAGE_AMAZONIA, IMAGE_ADVENTISTA } from "@/lib/imageConstants";
 
@@ -31,6 +32,7 @@ const useScrollAnimation = () => {
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
+  const { theme, toggleTheme, switchable } = useTheme();
   const featuresRef = useScrollAnimation();
   const operadorasRef = useScrollAnimation();
   const testimonialsRef = useScrollAnimation();
@@ -60,6 +62,19 @@ export default function Home() {
             <a href="#depoimentos" className="text-xs md:text-sm hover:text-primary transition hidden sm:inline">
               Depoimentos
             </a>
+            {switchable && (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg hover:bg-primary/10 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === "light" ? (
+                  <Moon className="w-5 h-5 text-primary" />
+                ) : (
+                  <Sun className="w-5 h-5 text-primary" />
+                )}
+              </button>
+            )}
             <Button
               onClick={() => setShowChat(true)}
               className="bg-primary hover:bg-primary/90 text-white text-xs md:text-sm px-3 md:px-4 py-2"
