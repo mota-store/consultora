@@ -19,7 +19,7 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-white border-b border-border">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <img src="/manus-storage/protection-life-logo_13a23545.png" alt="Protection Life" className="w-8 h-8 flex-shrink-0" />
+            <img src="/manus-storage/protection-life-logo_093c6c99.png" alt="Protection Life" className="w-8 h-8 flex-shrink-0" />
             <div className="min-w-0">
               <span className="text-lg md:text-xl font-bold text-primary block truncate">Protection Life</span>
               <p className="text-xs text-foreground/60">por Talita Motta</p>
@@ -64,7 +64,7 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <img 
-                src="/manus-storage/talia-avatar_cc4ad09f.png" 
+                src="/manus-storage/talia-assistant_6226ab99.png" 
                 alt="Tália - Assistente de Consultoria" 
                 className="w-full max-w-xs md:max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
               />
@@ -146,26 +146,26 @@ export default function Home() {
                 role: "Empresária",
                 text: "Talita me ajudou a encontrar o melhor plano para minha empresa. Muito profissional!",
                 rating: 5,
-                photo: "/manus-storage/testimonial-maria_9c17adfb.png",
+                photo: "/manus-storage/testimonial-maria_12366a5c.png",
               },
               {
                 name: "João Santos",
                 role: "Autônomo",
                 text: "Excelente consultoria. A Tália respondeu todas as minhas dúvidas rapidinho.",
                 rating: 5,
-                photo: "/manus-storage/testimonial-joao_b439b265.png",
+                photo: "/manus-storage/testimonial-joao_db3292b7.png",
               },
               {
                 name: "Ana Costa",
                 role: "Mãe de família",
                 text: "Consegui um plano ótimo com preço justo. Recomendo muito!",
                 rating: 5,
-                photo: "/manus-storage/testimonial-ana_cab4ac46.png",
+                photo: "/manus-storage/testimonial-ana_716b0c90.png",
               },
             ].map((testimonial, idx) => (
               <Card key={idx} className="p-6 border-2 border-primary/10">
                 <div className="flex items-center gap-4 mb-4">
-                  <img src={testimonial.photo} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                  <img src={testimonial.photo} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" onError={(e) => (e.target as HTMLImageElement).style.display='none'} />
                   <div className="min-w-0">
                     <p className="font-semibold text-primary text-sm truncate">{testimonial.name}</p>
                     <p className="text-xs text-foreground/60">{testimonial.role}</p>
