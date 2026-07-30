@@ -64,11 +64,41 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         try {
+          // Define the structured questions
+          const questions = [
+            "Qual é o seu NOME COMPLETO?",
+            "Qual é seu TELEFONE com WhatsApp?",
+            "Qual é sua IDADE?",
+            "Você já tem um plano de saúde? (sim/não)",
+            "Você quer COMPRAR um novo plano ou TROCAR o atual?",
+            "Tem alguma DÚVIDA que gostaria de esclarecer antes de prosseguir?",
+          ];
+
+          const step = input.context.step;
+          const isLastStep = step >= questions.length - 1;
+
+          // If this is the last step, prepare confirmation message
+          if (isLastStep) {
+            return {
+              message: "Perfeito! 🎉 Confirmei todas as suas informações. Estou repassando esses dados para a consultora Talita agora... Você será redirecionado para o WhatsApp dela em um momento! 💙",
+            };
+          }
+
+          // Get the next question
+          const nextQuestion = questions[step + 1];
+
           // Get OpenRouter API key from environment
           const apiKey = process.env.OPENROUTER_API_KEY;
           if (!apiKey) {
             throw new Error("OpenRouter API key not configured");
           }
+
+          // Create a system prompt to ensure Tália follows the structured flow
+          const systemPrompt = `Você é a Tália, assistente virtual da Talita Motta. Você está coletando informações de forma estruturada.
+
+Próxima pergunta a fazer: "${nextQuestion}"
+
+Responda de forma amigável, com emojis, mas SEMPRE faça a próxima pergunta da lista acima. Não desvie do fluxo.`;
 
           // Call OpenRouter API
           const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -79,9 +109,15 @@ export const appRouter = router({
             },
             body: JSON.stringify({
               model: "gpt-3.5-turbo",
-              messages: input.messages,
+              messages: [
+                {
+                  role: "system",
+                  content: systemPrompt,
+                },
+                ...input.messages,
+              ],
               temperature: 0.7,
-              max_tokens: 500,
+              max_tokens: 200,
             }),
           });
 
@@ -90,7 +126,7 @@ export const appRouter = router({
           }
 
           const data = await response.json();
-          const message = data.choices?.[0]?.message?.content || "Desculpe, não consegui gerar uma resposta.";
+          const message = data.choices?.[0]?.message?.content || nextQuestion;
 
           return { message };
         } catch (error) {
