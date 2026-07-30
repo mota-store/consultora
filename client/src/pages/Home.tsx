@@ -11,28 +11,30 @@ export default function Home() {
     return <ChatInterface onClose={() => setShowChat(false)} />;
   }
 
+  const whatsappLink = "https://wa.me/5591983070 32?text=Ol%C3%A1%20Talita%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20planos%20de%20sa%C3%BAde";
+
   return (
     <div className="min-h-screen bg-white text-foreground">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/manus-storage/protection-life-logo_13a23545.png" alt="Protection Life" className="w-10 h-10" />
-            <div>
-              <span className="text-xl font-bold text-primary">Protection Life</span>
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <img src="/manus-storage/protection-life-logo_13a23545.png" alt="Protection Life" className="w-8 h-8 flex-shrink-0" />
+            <div className="min-w-0">
+              <span className="text-lg md:text-xl font-bold text-primary block truncate">Protection Life</span>
               <p className="text-xs text-foreground/60">por Talita Motta</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="#operadoras" className="text-sm hover:text-primary transition">
+          <div className="flex items-center gap-2 md:gap-4 flex-wrap justify-end">
+            <a href="#operadoras" className="text-xs md:text-sm hover:text-primary transition hidden sm:inline">
               Operadoras
             </a>
-            <a href="#depoimentos" className="text-sm hover:text-primary transition">
+            <a href="#depoimentos" className="text-xs md:text-sm hover:text-primary transition hidden sm:inline">
               Depoimentos
             </a>
             <Button
               onClick={() => setShowChat(true)}
-              className="bg-primary hover:bg-primary/90 text-white"
+              className="bg-primary hover:bg-primary/90 text-white text-xs md:text-sm px-3 md:px-4 py-2"
             >
               Falar com Tália 💙
             </Button>
@@ -41,21 +43,21 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-20">
+      <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-12 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-5xl mx-auto">
             <div>
-              <h1 className="text-5xl font-bold text-primary mb-6">
+              <h1 className="text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-6">
                 Encontre o Melhor Plano de Saúde para Você
               </h1>
-              <p className="text-xl text-foreground/70 mb-8">
+              <p className="text-base md:text-xl text-foreground/70 mb-6 md:mb-8">
                 Consultoria especializada em planos de saúde. Deixe que a Tália, nossa assistente IA, 
                 ajude você a encontrar a melhor opção para sua família ou empresa.
               </p>
               <Button
                 onClick={() => setShowChat(true)}
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6"
+                className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
               >
                 Comece Agora com a Tália 🤖
               </Button>
@@ -64,7 +66,7 @@ export default function Home() {
               <img 
                 src="/manus-storage/talia-assistant_6b407a5d.png" 
                 alt="Tália - Assistente de Consultoria" 
-                className="w-full max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
+                className="w-full max-w-xs md:max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
               />
             </div>
           </div>
@@ -72,12 +74,12 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-primary mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Por que escolher a Talita Motta?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="p-6 border-2 border-primary/10 hover:border-primary/30 transition">
               <Shield className="w-12 h-12 text-primary mb-4" />
               <h3 className="text-xl font-semibold text-primary mb-2">Segurança</h3>
@@ -104,12 +106,12 @@ export default function Home() {
       </section>
 
       {/* Operadoras Section */}
-      <section id="operadoras" className="py-16 bg-primary/5">
+      <section id="operadoras" className="py-12 md:py-16 bg-primary/5">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-primary mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Operadoras Parceiras
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {[
               { name: "Hapvida", description: "Cobertura nacional com excelente rede", logo: "/manus-storage/hapvida-logo_e83edbbe.png" },
               { name: "Bradesco", description: "Planos empresariais e individuais", logo: "/manus-storage/bradesco-logo_a735cbad.png" },
@@ -132,33 +134,43 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="depoimentos" className="py-16 bg-white">
+      <section id="depoimentos" className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-primary mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             O que nossos clientes dizem
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 name: "Maria Silva",
                 role: "Empresária",
                 text: "Talita me ajudou a encontrar o melhor plano para minha empresa. Muito profissional!",
                 rating: 5,
+                photo: "/manus-storage/testimonial-maria_9c17adfb.png",
               },
               {
                 name: "João Santos",
                 role: "Autônomo",
                 text: "Excelente consultoria. A Tália respondeu todas as minhas dúvidas rapidinho.",
                 rating: 5,
+                photo: "/manus-storage/testimonial-joao_b439b265.png",
               },
               {
                 name: "Ana Costa",
                 role: "Mãe de família",
                 text: "Consegui um plano ótimo com preço justo. Recomendo muito!",
                 rating: 5,
+                photo: "/manus-storage/testimonial-ana_cab4ac46.png",
               },
             ].map((testimonial, idx) => (
               <Card key={idx} className="p-6 border-2 border-primary/10">
+                <div className="flex items-center gap-4 mb-4">
+                  <img src={testimonial.photo} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="font-semibold text-primary text-sm truncate">{testimonial.name}</p>
+                    <p className="text-xs text-foreground/60">{testimonial.role}</p>
+                  </div>
+                </div>
                 <div className="flex gap-1 mb-4">
                   {Array(testimonial.rating)
                     .fill(0)
@@ -168,11 +180,7 @@ export default function Home() {
                       </span>
                     ))}
                 </div>
-                <p className="text-foreground/70 mb-4 italic">"{testimonial.text}"</p>
-                <div>
-                  <p className="font-semibold text-primary">{testimonial.name}</p>
-                  <p className="text-sm text-foreground/60">{testimonial.role}</p>
-                </div>
+                <p className="text-foreground/70 italic text-sm">"{testimonial.text}"</p>
               </Card>
             ))}
           </div>
@@ -180,16 +188,16 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary text-white">
+      <section className="py-12 md:py-16 bg-primary text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Pronto para encontrar seu plano?</h2>
-          <p className="text-lg mb-8 text-white/90">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Pronto para encontrar seu plano?</h2>
+          <p className="text-base md:text-lg mb-6 md:mb-8 text-white/90">
             Converse com a Tália agora e descubra as melhores opções para você! 💙
           </p>
           <Button
             onClick={() => setShowChat(true)}
             size="lg"
-            className="bg-white hover:bg-white/90 text-primary text-lg px-8 py-6"
+            className="bg-white hover:bg-white/90 text-primary w-full md:w-auto"
           >
             Falar com Tália Agora 🤖
           </Button>
@@ -197,10 +205,13 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary/10 border-t border-border py-8">
+      <footer className="bg-primary/10 border-t border-border py-6 md:py-8">
         <div className="container mx-auto px-4 text-center text-foreground/70">
-          <p>© 2026 Protection Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
-          <p className="text-sm mt-2">Especialista: Talita Motta | Disponível 24/7 para ajudar você! 💙</p>
+          <p className="text-sm md:text-base">© 2026 Protection Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
+          <p className="text-xs md:text-sm mt-2">Especialista: Talita Motta | Disponível 24/7 para ajudar você! 💙</p>
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-xs md:text-sm mt-3 inline-block">
+            Fale conosco via WhatsApp
+          </a>
         </div>
       </footer>
     </div>
