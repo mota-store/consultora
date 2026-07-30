@@ -7,7 +7,12 @@ import path from "path";
 export async function setupVite(app: Express, server: Server) {
   // Dynamic import to avoid loading Vite in production
   const { createServer: createViteServer } = await import("vite");
-  const viteConfig = (await import("../../vite.config")).default;
+  
+  // Create minimal vite config for dev server (don't import vite.config.ts to avoid bundling)
+  const viteConfig = {
+    root: path.resolve(import.meta.dirname, "../..", "client"),
+    publicDir: path.resolve(import.meta.dirname, "../..", "client", "public"),
+  };
 
   const serverOptions = {
     middlewareMode: true,
