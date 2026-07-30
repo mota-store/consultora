@@ -42,21 +42,30 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl font-bold text-primary mb-6">
-              Encontre o Melhor Plano de Saúde para Você
-            </h1>
-            <p className="text-xl text-foreground/70 mb-8">
-              Consultoria especializada em planos de saúde. Deixe que a Tália, nossa assistente IA, 
-              ajude você a encontrar a melhor opção para sua família ou empresa.
-            </p>
-            <Button
-              onClick={() => setShowChat(true)}
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6"
-            >
-              Comece Agora com a Tália 🤖
-            </Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <div>
+              <h1 className="text-5xl font-bold text-primary mb-6">
+                Encontre o Melhor Plano de Saúde para Você
+              </h1>
+              <p className="text-xl text-foreground/70 mb-8">
+                Consultoria especializada em planos de saúde. Deixe que a Tália, nossa assistente IA, 
+                ajude você a encontrar a melhor opção para sua família ou empresa.
+              </p>
+              <Button
+                onClick={() => setShowChat(true)}
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6"
+              >
+                Comece Agora com a Tália 🤖
+              </Button>
+            </div>
+            <div className="flex justify-center">
+              <img 
+                src="/manus-storage/talia-assistant_6b407a5d.png" 
+                alt="Tália - Assistente de Consultoria" 
+                className="w-full max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -101,17 +110,17 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { name: "Hapvida", description: "Cobertura nacional com excelente rede" },
-              { name: "Bradesco", description: "Planos empresariais e individuais" },
-              { name: "Hospital Amazônia", description: "Referência em Belém" },
-              { name: "Hospital Adventista", description: "Qualidade e confiabilidade" },
+              { name: "Hapvida", description: "Cobertura nacional com excelente rede", logo: "/manus-storage/hapvida-logo_e83edbbe.png" },
+              { name: "Bradesco", description: "Planos empresariais e individuais", logo: "/manus-storage/bradesco-logo_a735cbad.png" },
+              { name: "Hospital Amazônia", description: "Referência em Belém", logo: "/manus-storage/hospital-amazonia-logo_fa866e7c.png" },
+              { name: "Hospital Adventista", description: "Qualidade e confiabilidade", logo: "/manus-storage/hospital-adventista_f6736e39.jpg" },
             ].map((op) => (
               <Card
                 key={op.name}
                 className="p-6 border-2 border-primary/10 hover:border-primary/30 transition text-center"
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">{op.name[0]}</span>
+                <div className="w-full h-20 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
+                  <img src={op.logo} alt={op.name} className="max-h-full max-w-full object-contain" />
                 </div>
                 <h3 className="font-semibold text-primary mb-2">{op.name}</h3>
                 <p className="text-sm text-foreground/70">{op.description}</p>
