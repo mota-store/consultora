@@ -116,7 +116,7 @@ export default function Home() {
                 key={op.name}
                 className="p-6 border-2 border-primary/10 hover:border-primary/30 transition text-center"
               >
-                <div className="w-full h-32 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-48 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center overflow-hidden">
                   <img src={op.logo} alt={op.name} className="max-h-full max-w-full object-contain" />
                 </div>
                 <h3 className="font-semibold text-primary mb-2">{op.name}</h3>
