@@ -16,30 +16,41 @@ interface Message {
 interface ChatData {
   nome: string;
   telefone: string;
-  intencaoTroca: string;
-  beneficiario: string;
-  idades: string;
-  motivoBusca: string;
-  preferenciasOperadora: string;
-  condicoesPre: string;
-  abrangencia: string;
-  redeAmpla: string;
-  criterioPreco: string;
+  idade: string;
+  temPlano: string;
+  intencao: string;
+  duvidas: string;
+  beneficiario?: string;
+  idades?: string;
+  motivoBusca?: string;
+  preferenciasOperadora?: string;
+  condicoesPre?: string;
+  abrangencia?: string;
+  redeAmpla?: string;
+  criterioPreco?: string;
 }
 
 const INITIAL_QUESTIONS = [
-  { key: "nome", prompt: "Qual é o seu nome?" },
-  { key: "telefone", prompt: "Qual é seu número de telefone? (com WhatsApp, por favor)" },
-  { key: "intencaoTroca", prompt: "Você já tem um plano de saúde e quer trocar? (sim/não)" },
-  { key: "beneficiario", prompt: "O plano é para você mesmo ou para outra pessoa/família/empresa?" },
-  { key: "idades", prompt: "Qual é a idade de quem vai usar o plano? (Se for mais de uma pessoa, separe por vírgula)" },
-  { key: "motivoBusca", prompt: "Você está procurando um plano para um tratamento específico ou por segurança geral?" },
-  { key: "preferenciasOperadora", prompt: "Você tem alguma preferência de operadora (Hapvida, Bradesco, etc) ou quer ajuda para escolher?" },
-  { key: "condicoesPre", prompt: "Você faz ou precisa de tratamento para alguma condição pré-existente? (diabetes, hipertensão, etc)" },
-  { key: "abrangencia", prompt: "Você prefere um plano nacional ou regional?" },
-  { key: "redeAmpla", prompt: "Você prefere uma rede ampla de hospitais e clínicas?" },
-  { key: "criterioPreco", prompt: "O preço mais barato é um fator decisivo para você?" },
+  { key: "nome", prompt: "Qual é o seu NOME COMPLETO?" },
+  { key: "telefone", prompt: "Qual é seu TELEFONE com WhatsApp?" },
+  { key: "idade", prompt: "Qual é sua IDADE?" },
+  { key: "temPlano", prompt: "Você já tem um plano de saúde? (sim/não)" },
+  { key: "intencao", prompt: "Você quer COMPRAR um novo plano ou TROCAR o atual?" },
+  { key: "duvidas", prompt: "Tem alguma DÚVIDA que gostaria de esclarecer antes de prosseguir?" },
 ];
+
+const getNextQuestion = (chatData: Partial<ChatData>, currentStep: number) => {
+  // If user said they don't have a plan, skip the "trocar" option
+  if (currentStep === 4 && chatData.temPlano?.toLowerCase().includes("não")) {
+    return "Perfeito! 🎉 Você vai COMPRAR um novo plano então! Qual é o motivo principal da sua busca? (Tratamento específico ou segurança geral?)";
+  }
+  
+  if (currentStep >= INITIAL_QUESTIONS.length) {
+    return null;
+  }
+  
+  return INITIAL_QUESTIONS[currentStep]?.prompt;
+};
 
 export default function ChatInterface({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -143,12 +154,13 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
       // Próximo step
       const nextStep = currentStep + 1;
-      if (nextStep < INITIAL_QUESTIONS.length) {
+      const nextQuestion = getNextQuestion(updatedData, nextStep);
+      
+      if (nextQuestion) {
         setCurrentStep(nextStep);
-        const nextQuestion = INITIAL_QUESTIONS[nextStep];
         const taliaMessage: Message = {
           id: Date.now().toString() + "talia",
-          text: taliaResponse.message || nextQuestion.prompt,
+          text: taliaResponse.message || nextQuestion,
           sender: "talia",
           timestamp: new Date(),
         };
@@ -158,7 +170,7 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
         if (leadId) {
           await addMessageMutation.mutateAsync({
             leadId,
-            mensagem: taliaResponse.message || nextQuestion.prompt,
+            mensagem: taliaResponse.message || nextQuestion,
             remetente: "talia",
           });
         }
@@ -174,22 +186,17 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
         // Montar mensagem final com todos os dados
         const whatsappMessage = `Olá Talita! Sou ${updatedData.nome}. Gostaria de mais informações sobre planos de saúde. Meus dados:
 - Telefone: ${updatedData.telefone}
-- Intenção: ${updatedData.intencaoTroca}
-- Beneficiário: ${updatedData.beneficiario}
-- Idades: ${updatedData.idades}
-- Motivo: ${updatedData.motivoBusca}
-- Preferência: ${updatedData.preferenciasOperadora}
-- Condições: ${updatedData.condicoesPre}
-- Abrangência: ${updatedData.abrangencia}
-- Rede ampla: ${updatedData.redeAmpla}
-- Preço importante: ${updatedData.criterioPreco}`;
+- Idade: ${updatedData.idade}
+- Tem plano: ${updatedData.temPlano}
+- Intenção: ${updatedData.intencao}
+- Dúvidas: ${updatedData.duvidas}`;
 
-        const whatsappUrl = `https://wa.me/5591987654321?text=${encodeURIComponent(whatsappMessage)}`;
+        const whatsappUrl = `https://wa.me/5591983070 32?text=${encodeURIComponent(whatsappMessage)}`;
         window.open(whatsappUrl, "_blank");
 
         const closingMessage: Message = {
           id: Date.now().toString() + "closing",
-          text: "Excelente! 🎉 Coletei todas as suas informações. Vou abrir o WhatsApp agora para você falar com a Talita e receber uma proposta personalizada! 💙✨",
+          text: "Perfeito! 🎉 Confirmei todas as suas informações. Estou repassando esses dados para a consultora Talita agora... Você será redirecionado para o WhatsApp dela em um momento! 💙",
           sender: "talia",
           timestamp: new Date(),
         };
