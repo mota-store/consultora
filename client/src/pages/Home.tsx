@@ -46,7 +46,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-12 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-5xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <div>
               <h1 className="text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-6">
                 Encontre o Melhor Plano de Saúde para Você
@@ -62,13 +62,6 @@ export default function Home() {
               >
                 Comece Agora com a Tália
               </Button>
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src={IMAGE_TALIA} 
-                alt="Tália - Assistente de Consultoria" 
-                className="w-full max-w-xs md:max-w-sm rounded-lg shadow-lg border-4 border-primary/20"
-              />
             </div>
           </div>
         </div>

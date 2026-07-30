@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { X, Send } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { IMAGE_TALIA } from "@/lib/imageConstants";
 
 interface Message {
   id: string;
@@ -218,8 +219,8 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
         {/* Header */}
         <div className="bg-primary text-white p-4 flex items-center justify-between rounded-t-lg">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-              <span className="text-lg">🤖</span>
+            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center overflow-hidden">
+              <img src={IMAGE_TALIA} alt="Tália" className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="font-semibold">Tália</p>
