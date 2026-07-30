@@ -17,10 +17,11 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-white border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white" />
+            <img src="/manus-storage/protection-life-logo_13a23545.png" alt="Protection Life" className="w-10 h-10" />
+            <div>
+              <span className="text-xl font-bold text-primary">Protection Life</span>
+              <p className="text-xs text-foreground/60">por Talita Motta</p>
             </div>
-            <span className="text-xl font-bold text-primary">Talita Motta</span>
           </div>
           <div className="flex items-center gap-4">
             <a href="#operadoras" className="text-sm hover:text-primary transition">
@@ -198,8 +199,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-primary/10 border-t border-border py-8">
         <div className="container mx-auto px-4 text-center text-foreground/70">
-          <p>© 2026 Talita Motta Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
-          <p className="text-sm mt-2">Disponível 24/7 para ajudar você! 💙</p>
+          <p>© 2026 Protection Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
+          <p className="text-sm mt-2">Especialista: Talita Motta | Disponível 24/7 para ajudar você! 💙</p>
         </div>
       </footer>
     </div>
