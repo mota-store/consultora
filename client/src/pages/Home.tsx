@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Shield, Users, CheckCircle2 } from "lucide-react";
 import ChatInterface from "@/components/ChatInterface";
 import { IMAGE_LOGO, IMAGE_TALIA, IMAGE_MARIA, IMAGE_JOAO, IMAGE_ANA, IMAGE_HAPVIDA, IMAGE_BRADESCO, IMAGE_AMAZONIA, IMAGE_ADVENTISTA } from "@/lib/imageConstants";
 
+const useScrollAnimation = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+};
+
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
+  const featuresRef = useScrollAnimation();
+  const operadorasRef = useScrollAnimation();
+  const testimonialsRef = useScrollAnimation();
 
   if (showChat) {
     return <ChatInterface onClose={() => setShowChat(false)} />;
@@ -68,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 md:py-16 bg-white">
+      <section ref={featuresRef.ref} className={`py-12 md:py-16 bg-white transition-all duration-700 ${featuresRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Por que escolher a Talita Motta?
@@ -100,7 +127,7 @@ export default function Home() {
       </section>
 
       {/* Operadoras Section */}
-      <section id="operadoras" className="py-12 md:py-16 bg-primary/5">
+      <section ref={operadorasRef.ref} id="operadoras" className={`py-12 md:py-16 bg-primary/5 transition-all duration-700 ${operadorasRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             Operadoras Parceiras
@@ -128,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="depoimentos" className="py-12 md:py-16 bg-white">
+      <section ref={testimonialsRef.ref} id="depoimentos" className={`py-12 md:py-16 bg-white transition-all duration-700 ${testimonialsRef.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8 md:mb-12">
             O que nossos clientes dizem

@@ -43,15 +43,15 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
+  --primary: oklch(0.55 0.22 259.8);
   --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
+  --sidebar-primary: oklch(0.55 0.22 259.8);
   --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  --chart-1: oklch(0.65 0.2 259.8);
+  --chart-2: oklch(0.55 0.22 259.8);
+  --chart-3: oklch(0.5 0.25 259.8);
+  --chart-4: oklch(0.45 0.28 259.8);
+  --chart-5: oklch(0.4 0.3 259.8);
   --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.235 0.015 65);
@@ -79,9 +79,9 @@
 }
 
 .dark {
-  --primary: var(--color-blue-700);
+  --primary: oklch(0.65 0.2 259.8);
   --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
+  --sidebar-primary: oklch(0.65 0.2 259.8);
   --sidebar-primary-foreground: var(--color-blue-50);
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.85 0.005 65);
@@ -173,5 +173,74 @@
       padding-right: 2rem;
       max-width: 1280px; /* Standard content width */
     }
+  }
+
+  /* Scroll animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .animate-on-scroll.visible {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .animate-slide-left {
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  .animate-slide-right {
+    opacity: 0;
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    opacity: 0;
+    animation: scaleIn 0.8s ease-out forwards;
   }
 }
