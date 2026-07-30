@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Shield, Users, CheckCircle2 } from "lucide-react";
 import ChatInterface from "@/components/ChatInterface";
-import { IMAGE_LOGO, IMAGE_TALIA, IMAGE_MARIA, IMAGE_JOAO, IMAGE_ANA } from "@/lib/imageConstants";
+import { IMAGE_LOGO, IMAGE_TALIA, IMAGE_MARIA, IMAGE_JOAO, IMAGE_ANA, IMAGE_HAPVIDA, IMAGE_BRADESCO, IMAGE_AMAZONIA, IMAGE_ADVENTISTA } from "@/lib/imageConstants";
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
@@ -60,7 +60,7 @@ export default function Home() {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
               >
-                Comece Agora com a Tália 🤖
+                Comece Agora com a Tália
               </Button>
             </div>
             <div className="flex justify-center">
@@ -114,10 +114,10 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {[
-              { name: "Hapvida", description: "Cobertura nacional com excelente rede", logo: "/manus-storage/hapvida-logo_e83edbbe.png" },
-              { name: "Bradesco", description: "Planos empresariais e individuais", logo: "/manus-storage/bradesco-logo_a735cbad.png" },
-              { name: "Hospital Amazônia", description: "Referência em Belém", logo: "/manus-storage/hospital-amazonia-logo_fa866e7c.png" },
-              { name: "Hospital Adventista", description: "Qualidade e confiabilidade", logo: "/manus-storage/hospital-adventista_f6736e39.jpg" },
+              { name: "Hapvida", description: "Cobertura nacional com excelente rede", logo: IMAGE_HAPVIDA },
+              { name: "Bradesco", description: "Planos empresariais e individuais", logo: IMAGE_BRADESCO },
+              { name: "Hospital Amazônia", description: "Referência em Belém", logo: IMAGE_AMAZONIA },
+              { name: "Hospital Adventista", description: "Qualidade e confiabilidade", logo: IMAGE_ADVENTISTA },
             ].map((op) => (
               <Card
                 key={op.name}
