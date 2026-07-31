@@ -95,23 +95,6 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
       }
     }
 
-    const dynamicResponses = [
-      "Entendi! 🤖",
-      "Opa, anotei! 📝",
-      "Beleza! 🙏",
-      "Perfeito! 🌟",
-      "Certo! 💙",
-    ];
-    const randomResponse = dynamicResponses[Math.floor(Math.random() * dynamicResponses.length)];
-
-    const responseMsg: Message = {
-      id: Date.now().toString() + "_response",
-      text: randomResponse,
-      sender: "talia",
-      timestamp: new Date(),
-    };
-    setMessages((prev) => [...prev, responseMsg]);
-
     const msg: Message = {
       id: Date.now().toString(),
       text: prompt,
