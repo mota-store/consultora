@@ -119,7 +119,7 @@ export default function Home() {
               <Button
                 onClick={() => setShowChat(true)}
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
+                className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto whitespace-nowrap"
               >
                 Comece Agora com a Tal<span className="font-black text-white">IA</span>
               </Button>
@@ -257,7 +257,7 @@ export default function Home() {
             <Button
             onClick={() => setShowChat(true)}
             size="lg"
-            className="bg-white hover:bg-slate-50 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-950 text-primary font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all"
+            className="bg-white hover:bg-slate-50 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-950 text-primary font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all whitespace-nowrap"
           >
             Falar com Tal<span className="font-black">IA</span> Agora 💙
           </Button>
