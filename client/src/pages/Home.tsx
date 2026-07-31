@@ -40,11 +40,11 @@ export default function Home() {
   // Auto-scroll hint every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      // Scroll down 2mm
-      window.scrollBy({ top: 2, behavior: 'smooth' });
-      // Scroll back up 2mm after 500ms
+      // Scroll down 20px (more noticeable)
+      window.scrollBy({ top: 20, behavior: 'smooth' });
+      // Scroll back up 20px after 500ms
       setTimeout(() => {
-        window.scrollBy({ top: -2, behavior: 'smooth' });
+        window.scrollBy({ top: -20, behavior: 'smooth' });
       }, 500);
     }, 30000);
 
@@ -126,7 +126,7 @@ export default function Home() {
               
               {/* Scroll Indicator */}
               <div className="mt-12 md:mt-16 flex justify-center">
-                <div className="animate-bounce text-primary text-3xl">↓</div>
+                <div className="animate-bounce text-primary text-3xl transform rotate-180">↓</div>
               </div>
             </div>
           </div>

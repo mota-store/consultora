@@ -154,10 +154,16 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
   const isValidName = (text: string): boolean => {
     const invalidPatterns = [
-      /^(oi|opa|olá|oi tudo|oi tudo bem|tudo bem|e aí|e ai|como vai|como você vai|boa|boa noite|bom dia|boa tarde|boa madrugada|oi talita|oi talia|oi tália)$/i,
+      /^(oi|opa|olá|oi tudo|oi tudo bem|tudo bem|e aí|e ai|como vai|como você vai|boa|boa noite|bom dia|boa tarde|boa madrugada|oi talita|oi talia|oi tália|opa boa noite|opa boa|opa bom|opa tudo|me chamo)$/i,
       /^(sim|não|nao|yes|no|ok|okay|tá|ta|certo|claro|beleza|blz)$/i,
+      /^\d+\s*(anos?|ano)?$/i,
     ];
     return !invalidPatterns.some(pattern => pattern.test(text.trim()));
+  };
+
+  const extractAge = (text: string): string => {
+    const match = text.match(/(\d+)/);
+    return match ? match[1] : text;
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -204,9 +210,15 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
       }
     }
 
+    let processedInput = input;
+    // Extract age if it's the age question
+    if (currentStep === 1) {
+      processedInput = extractAge(input);
+    }
+
     const updatedData = {
       ...chatData,
-      [currentQuestion.key]: input,
+      [currentQuestion.key]: processedInput,
     };
     setChatData(updatedData);
 
