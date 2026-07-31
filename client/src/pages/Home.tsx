@@ -43,12 +43,12 @@ export default function Home() {
   // Auto-scroll hint every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      // Scroll down 20px (more noticeable)
-      window.scrollBy({ top: 20, behavior: 'smooth' });
-      // Scroll back up 20px after 500ms
+      // Scroll down 60px (very noticeable!)
+      window.scrollBy({ top: 60, behavior: 'smooth' });
+      // Scroll back up 60px after 700ms
       setTimeout(() => {
-        window.scrollBy({ top: -20, behavior: 'smooth' });
-      }, 500);
+        window.scrollBy({ top: -60, behavior: 'smooth' });
+      }, 700);
     }, 30000);
 
     return () => clearInterval(interval);
