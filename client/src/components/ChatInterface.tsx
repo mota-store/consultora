@@ -166,12 +166,37 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
   };
 
   const isValidName = (text: string): boolean => {
+    // Check if it's just a greeting or response
     const invalidPatterns = [
-      /^(oi|opa|olá|oi tudo|oi tudo bem|tudo bem|e aí|e ai|como vai|como você vai|boa|boa noite|bom dia|boa tarde|boa madrugada|oi talita|oi talia|oi tália|opa boa noite|opa boa|opa bom|opa tudo|me chamo)$/i,
+      /^(oi|opa|olá|ola|oi tudo|oi tudo bem|tudo bem|e aí|e ai|como vai|como você vai|boa|boa noite|bom dia|boa tarde|boa madrugada)$/i,
       /^(sim|não|nao|yes|no|ok|okay|tá|ta|certo|claro|beleza|blz)$/i,
       /^\d+\s*(anos?|ano)?$/i,
     ];
+    
+    // If contains "me chamo" or "meu nome é", it's valid (has name info)
+    if (/(?:me chamo|meu nome é|meu nome eh|sou)\s+/i.test(text)) {
+      return true;
+    }
+    
     return !invalidPatterns.some(pattern => pattern.test(text.trim()));
+  };
+
+  const extractName = (text: string): string => {
+    let name = text.trim();
+    
+    // If contains "me chamo" or "meu nome é", extract what comes after
+    const meChamo = name.match(/(?:me chamo|meu nome é|meu nome eh|sou)\s+(.+?)(?:\s+okay|\s+ok|\s+sim|\s+não|\s+nao|$)/i);
+    if (meChamo && meChamo[1]) {
+      name = meChamo[1].trim();
+    }
+    
+    // Remove common suffixes
+    name = name.replace(/\s+(okay|ok|sim|não|nao|tá|ta|certo|claro|beleza|blz)\s*$/i, '').trim();
+    
+    // Remove common greetings at the start
+    name = name.replace(/^(oi|opa|olá|ola|e aí|e ai|oi talia|oi talita)\s+/i, '').trim();
+    
+    return name;
   };
 
   const extractAge = (text: string): string => {
