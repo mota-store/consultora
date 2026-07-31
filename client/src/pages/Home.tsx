@@ -79,7 +79,7 @@ export default function Home() {
               onClick={() => setShowChat(true)}
               className="bg-primary hover:bg-primary/90 text-white text-xs md:text-sm px-3 md:px-4 py-2"
             >
-              Falar com Tal<span className="font-black text-slate-900 dark:text-slate-100">IA</span> 💙
+              Falar com Tal<span className="font-black text-white dark:text-slate-900">IA</span> 💙
             </Button>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function Home() {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
               >
-                Comece Agora com a Tal<span className="font-black text-slate-900 dark:text-slate-100">IA</span>
+                Comece Agora com a Tal<span className="font-black text-white dark:text-slate-900">IA</span>
               </Button>
               
               {/* Scroll Indicator */}
