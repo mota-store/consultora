@@ -30,12 +30,12 @@ const QUESTIONS = [
   { key: "duvidas", prompt: "Tem alguma DÚVIDA que gostaria de esclarecer?" },
 ];
 
-export default function ChatInterface({ onClose, messages: initialMessages, setMessages: setInitialMessages }: { onClose: () => void; messages?: any[]; setMessages?: any }) {
+export default function ChatInterface({ onClose, messages: initialMessages, setMessages: setInitialMessages, currentStep: initialStep, setCurrentStep: setInitialStep, chatData: initialChatData, setChatData: setInitialChatData }: { onClose: () => void; messages?: any[]; setMessages?: any; currentStep?: number; setCurrentStep?: any; chatData?: any; setChatData?: any }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages || []);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [chatData, setChatData] = useState<Partial<ChatData>>({});
+  const [currentStep, setCurrentStep] = useState(initialStep || 0);
+  const [chatData, setChatData] = useState<Partial<ChatData>>(initialChatData || {});
   const [leadId, setLeadId] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -46,6 +46,16 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  // Sync state with parent
+  useEffect(() => {
+    if (setInitialStep) {
+      setInitialStep(currentStep);
+    }
+    if (setInitialChatData) {
+      setInitialChatData(chatData);
+    }
+  }, [currentStep, chatData, setInitialStep, setInitialChatData]);
+
 
   useEffect(() => {
     initializeChat();
