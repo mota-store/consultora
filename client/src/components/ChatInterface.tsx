@@ -241,7 +241,7 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="w-full h-full max-w-2xl max-h-screen flex flex-col bg-white border-2 border-primary shadow-2xl">
+      <Card className="w-full h-full max-w-2xl max-h-screen flex flex-col bg-background border-2 border-primary shadow-2xl dark:bg-slate-900">
         {/* Header */}
         <div className="bg-primary text-white p-4 flex items-center justify-between rounded-t-lg">
           <div className="flex items-center gap-2">
@@ -262,10 +262,10 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/50">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background dark:bg-slate-800">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-xs ${msg.sender === "user" ? "bg-primary text-white rounded-br-none" : "bg-primary/10 text-foreground rounded-bl-none border border-primary/20"} px-4 py-2 rounded-lg`}>
+              <div className={`max-w-xs ${msg.sender === "user" ? "bg-primary text-white rounded-br-none" : "bg-primary/10 text-foreground dark:bg-slate-700 dark:text-slate-100 rounded-bl-none border border-primary/20"} px-4 py-2 rounded-lg`}>
                 <p className="text-sm">{msg.text}</p>
                 {msg.options && msg.options.length > 0 && (
                   <div className="mt-3 space-y-2">
@@ -297,7 +297,7 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
         {/* Input */}
         {!hasOptions && (
-          <form onSubmit={handleSendMessage} className="border-t border-border p-4 flex gap-2 bg-white rounded-b-lg">
+          <form onSubmit={handleSendMessage} className="border-t border-border p-4 flex gap-2 bg-background dark:bg-slate-800 rounded-b-lg">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
