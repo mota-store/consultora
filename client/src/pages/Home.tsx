@@ -40,18 +40,35 @@ export default function Home() {
   const operadorasRef = useScrollAnimation();
   const testimonialsRef = useScrollAnimation();
 
-  // Auto-scroll hint every 30 seconds
+  // Auto-scroll hint - 5s first, then 30s, then 30s, then stop
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Scroll down 60px (very noticeable!)
-      window.scrollBy({ top: 60, behavior: 'smooth' });
-      // Scroll back up 60px after 700ms
+    let scrollCount = 0;
+    
+    const doScroll = () => {
+      // Scroll down 80px (more noticeable)
+      window.scrollBy({ top: 80, behavior: 'smooth' });
+      // Scroll back up 80px after 800ms
       setTimeout(() => {
-        window.scrollBy({ top: -60, behavior: 'smooth' });
-      }, 700);
-    }, 10000);
-
-    return () => clearInterval(interval);
+        window.scrollBy({ top: -80, behavior: 'smooth' });
+      }, 800);
+      
+      scrollCount++;
+      
+      // Schedule next scroll
+      if (scrollCount === 1) {
+        // First scroll done, wait 30s for second
+        setTimeout(doScroll, 30000);
+      } else if (scrollCount === 2) {
+        // Second scroll done, wait 30s for third
+        setTimeout(doScroll, 30000);
+      }
+      // After third scroll, stop (scrollCount === 3)
+    };
+    
+    // First scroll after 5s
+    const timer = setTimeout(doScroll, 5000);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   if (showChat) {
