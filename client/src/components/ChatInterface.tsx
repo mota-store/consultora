@@ -152,16 +152,19 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
     }, 500);
   };
 
+  const isValidName = (text: string): boolean => {
+    const invalidPatterns = [
+      /^(oi|opa|olá|oi tudo|oi tudo bem|tudo bem|e aí|e ai|como vai|como você vai|boa|boa noite|bom dia|boa tarde|boa madrugada|oi talita|oi talia|oi tália)$/i,
+      /^(sim|não|nao|yes|no|ok|okay|tá|ta|certo|claro|beleza|blz)$/i,
+    ];
+    return !invalidPatterns.some(pattern => pattern.test(text.trim()));
+  };
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
     const currentQuestion = QUESTIONS[currentStep];
-    const updatedData = {
-      ...chatData,
-      [currentQuestion.key]: input,
-    };
-    setChatData(updatedData);
 
     // Adicionar mensagem do usuário
     const userMessage: Message = {
@@ -173,18 +176,39 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Criar lead na primeira mensagem
-    if (currentStep === 0 && !leadId) {
-      // Extrair apenas o primeiro nome ou primeira palavra
-      const extractedName = input.split(' ')[0].trim() || input.trim();
-      const result = await createLeadMutation.mutateAsync({
-        nome: extractedName,
-        telefone: "",
-        email: "",
-      });
-      const newLeadId = (result as any)?.insertId || Math.random();
-      setLeadId(newLeadId);
+    // Validar nome na primeira pergunta
+    if (currentStep === 0) {
+      if (!isValidName(input)) {
+        setTimeout(() => {
+          const retryMessage: Message = {
+            id: Date.now().toString() + "_retry",
+            text: "Oi! 🥰 Mas qual é o seu nome mesmo? 😉 Gostaria de saber como te chamar! 💙",
+            sender: "talia",
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, retryMessage]);
+        }, 500);
+        return;
+      }
+
+      // Nome válido - criar lead
+      if (!leadId) {
+        const extractedName = input.split(' ')[0].trim() || input.trim();
+        const result = await createLeadMutation.mutateAsync({
+          nome: extractedName,
+          telefone: "",
+          email: "",
+        });
+        const newLeadId = (result as any)?.insertId || Math.random();
+        setLeadId(newLeadId);
+      }
     }
+
+    const updatedData = {
+      ...chatData,
+      [currentQuestion.key]: input,
+    };
+    setChatData(updatedData);
 
     // Salvar mensagem
     if (leadId) {
