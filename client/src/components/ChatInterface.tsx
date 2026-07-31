@@ -56,18 +56,21 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
   };
 
   const initializeChat = async () => {
-    const greeting: Message = {
-      id: "1",
-      text: "Oi! 👋 Eu sou a Tália, assistente da Talita Motta! 💙 Vou ajudar você a encontrar o melhor plano de saúde.",
-      sender: "talia",
-      timestamp: new Date(),
-    };
-    setMessages([greeting]);
-    
-    // Mostrar primeira pergunta
-    setTimeout(() => {
-      showNextQuestion(0, {});
-    }, 500);
+    // Only initialize if messages are empty (first time)
+    if (messages.length === 0) {
+      const greeting: Message = {
+        id: "1",
+        text: "Oi! 👋 Eu sou a Tália, assistente da Talita Motta! 💙 Vou ajudar você a encontrar o melhor plano de saúde.",
+        sender: "talia",
+        timestamp: new Date(),
+      };
+      setMessages([greeting]);
+      
+      // Mostrar primeira pergunta
+      setTimeout(() => {
+        showNextQuestion(0, {});
+      }, 500);
+    }
   };
 
   const showNextQuestion = (step: number, currentData: Partial<ChatData>) => {
@@ -294,7 +297,13 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
             </div>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => {
+              // Save messages to parent state before closing
+              if (setInitialMessages) {
+                setInitialMessages(messages);
+              }
+              onClose();
+            }}
             className="hover:bg-white/20 p-1 rounded transition"
           >
             <X className="w-5 h-5" />
