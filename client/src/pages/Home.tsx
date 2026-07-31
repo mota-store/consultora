@@ -95,11 +95,11 @@ export default function Home() {
               </h1>
               {/* Operadoras Logos - Small and Quick Scroll Animation */}
               <div className="mb-8 md:mb-12">
-                <div className="flex items-center justify-center gap-3 md:gap-4 overflow-x-auto pb-4 animate-pulse">
-                  <img src={IMAGE_HAPVIDA} alt="Hapvida" className="h-12 md:h-16 object-contain flex-shrink-0" />
-                  <img src={IMAGE_BRADESCO} alt="Bradesco" className="h-12 md:h-16 object-contain flex-shrink-0" />
-                  <img src={IMAGE_AMAZONIA} alt="Hospital Amazônia" className="h-12 md:h-16 object-contain flex-shrink-0" />
-                  <img src={IMAGE_ADVENTISTA} alt="Hospital Adventista" className="h-12 md:h-16 object-contain flex-shrink-0" />
+                <div className="flex items-center justify-center gap-2 md:gap-3 overflow-x-auto pb-4 animate-pulse">
+                  <img src={IMAGE_HAPVIDA} alt="Hapvida" className="h-8 md:h-10 object-contain flex-shrink-0" />
+                  <img src={IMAGE_BRADESCO} alt="Bradesco" className="h-8 md:h-10 object-contain flex-shrink-0" />
+                  <img src={IMAGE_AMAZONIA} alt="Hospital Amazônia" className="h-8 md:h-10 object-contain flex-shrink-0" />
+                  <img src={IMAGE_ADVENTISTA} alt="Hospital Adventista" className="h-8 md:h-10 object-contain flex-shrink-0" />
                 </div>
               </div>
               <Button
