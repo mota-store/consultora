@@ -37,6 +37,20 @@ export default function Home() {
   const operadorasRef = useScrollAnimation();
   const testimonialsRef = useScrollAnimation();
 
+  // Auto-scroll hint every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Scroll down 2mm
+      window.scrollBy({ top: 2, behavior: 'smooth' });
+      // Scroll back up 2mm after 500ms
+      setTimeout(() => {
+        window.scrollBy({ top: -2, behavior: 'smooth' });
+      }, 500);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   if (showChat) {
     return <ChatInterface onClose={() => setShowChat(false)} />;
   }
