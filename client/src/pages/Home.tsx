@@ -107,7 +107,7 @@ export default function Home() {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
               >
-                Comece Agora com a <span className="font-black">Tal<span className="text-white">IA</span></span>
+                Comece Agora com a Tal<span className="font-black text-white">IA</span>
               </Button>
               
               {/* Scroll Indicator */}
