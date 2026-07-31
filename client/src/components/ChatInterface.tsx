@@ -228,6 +228,10 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
     if (currentStep === 1) {
       processedInput = extractAge(input);
     }
+    // Extract name if it's the name question
+    if (currentStep === 0) {
+      processedInput = extractName(input);
+    }
 
     const updatedData = {
       ...chatData,
@@ -270,6 +274,13 @@ export default function ChatInterface({ onClose, messages: initialMessages, setM
 
     const whatsappUrl = `https://wa.me/5591983070 32?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, "_blank");
+    
+    // Reset chat state after WhatsApp
+    setTimeout(() => {
+      if (setInitialMessages) setInitialMessages([]);
+      if (setInitialStep) setInitialStep(0);
+      if (setInitialChatData) setInitialChatData({});
+    }, 2500);
 
     const closingMessage: Message = {
       id: Date.now().toString() + "closing",

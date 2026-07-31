@@ -49,7 +49,7 @@ export default function Home() {
       setTimeout(() => {
         window.scrollBy({ top: -60, behavior: 'smooth' });
       }, 700);
-    }, 30000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
