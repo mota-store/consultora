@@ -49,9 +49,9 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-border">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <img src={IMAGE_LOGO} alt="Protection Life" className="w-8 h-8 flex-shrink-0" />
+            <img src={IMAGE_LOGO} alt="Protect Life" className="w-8 h-8 flex-shrink-0" />
             <div className="min-w-0">
-              <span className="text-lg md:text-xl font-bold text-primary block truncate">Protection Life</span>
+              <span className="text-lg md:text-xl font-bold text-primary block truncate">Protect Life</span>
               <p className="text-xs text-foreground/80 dark:text-foreground/90">por Talita Motta</p>
             </div>
           </div>
@@ -243,7 +243,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-primary/10 dark:bg-slate-900 border-t border-border py-6 md:py-8">
         <div className="container mx-auto px-4 text-center text-foreground/70 dark:text-foreground/80">
-          <p className="text-sm md:text-base">© 2026 Protection Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
+          <p className="text-sm md:text-base">© 2026 Protect Life - Consultoria de Planos de Saúde. Todos os direitos reservados.</p>
           <p className="text-xs md:text-sm mt-2">Especialista: Talita Motta | Disponível 24/7 para ajudar você! 💙</p>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-xs md:text-sm mt-3 inline-block">
             Fale conosco via WhatsApp
