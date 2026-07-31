@@ -91,7 +91,7 @@ export default function Home() {
             )}
             <Button
               onClick={() => setShowChat(true)}
-              className="bg-primary hover:bg-primary/90 text-white text-xs md:text-sm px-3 md:px-4 py-2"
+              className="bg-primary hover:bg-primary/90 text-white text-xs md:text-sm px-3 md:px-4 py-2 whitespace-nowrap"
             >
               Falar com <span className="font-black">Tal<span className="text-white">IA</span></span> 💙
             </Button>
