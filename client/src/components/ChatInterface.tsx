@@ -30,8 +30,8 @@ const QUESTIONS = [
   { key: "duvidas", prompt: "Tem alguma DÚVIDA que gostaria de esclarecer?" },
 ];
 
-export default function ChatInterface({ onClose }: { onClose: () => void }) {
-  const [messages, setMessages] = useState<Message[]>([]);
+export default function ChatInterface({ onClose, messages: initialMessages, setMessages: setInitialMessages }: { onClose: () => void; messages?: any[]; setMessages?: any }) {
+  const [messages, setMessages] = useState<Message[]>(initialMessages || []);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -265,6 +265,11 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, closingMessage]);
+    
+    // Save messages to parent state
+    if (setInitialMessages) {
+      setInitialMessages((prev: any) => [...prev, closingMessage]);
+    }
 
     setTimeout(() => {
       onClose();

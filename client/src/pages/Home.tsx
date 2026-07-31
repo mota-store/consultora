@@ -32,6 +32,7 @@ const useScrollAnimation = () => {
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
   const { theme, toggleTheme, switchable } = useTheme();
   const featuresRef = useScrollAnimation();
   const operadorasRef = useScrollAnimation();
@@ -52,7 +53,7 @@ export default function Home() {
   }, []);
 
   if (showChat) {
-    return <ChatInterface onClose={() => setShowChat(false)} />;
+    return <ChatInterface onClose={() => setShowChat(false)} messages={chatMessages} setMessages={setChatMessages} />;
   }
 
   const whatsappLink = "https://wa.me/5591983070 32?text=Ol%C3%A1%20Talita%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20planos%20de%20sa%C3%BAde";
