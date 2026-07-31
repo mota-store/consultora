@@ -93,10 +93,15 @@ export default function Home() {
               <h1 className="text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-6">
                 Encontre o Melhor Plano de Saúde para Você
               </h1>
-              <p className="text-base md:text-xl text-foreground/70 mb-6 md:mb-8">
-                Consultoria especializada em planos de saúde. Deixe que a Tália, nossa assistente IA, 
-                ajude você a encontrar a melhor opção para sua família ou empresa.
-              </p>
+              {/* Operadoras Logos - Small and Quick Scroll Animation */}
+              <div className="mb-8 md:mb-12">
+                <div className="flex items-center justify-center gap-3 md:gap-4 overflow-x-auto pb-4 animate-pulse">
+                  <img src={IMAGE_HAPVIDA} alt="Hapvida" className="h-12 md:h-16 object-contain flex-shrink-0" />
+                  <img src={IMAGE_BRADESCO} alt="Bradesco" className="h-12 md:h-16 object-contain flex-shrink-0" />
+                  <img src={IMAGE_AMAZONIA} alt="Hospital Amazônia" className="h-12 md:h-16 object-contain flex-shrink-0" />
+                  <img src={IMAGE_ADVENTISTA} alt="Hospital Adventista" className="h-12 md:h-16 object-contain flex-shrink-0" />
+                </div>
+              </div>
               <Button
                 onClick={() => setShowChat(true)}
                 size="lg"

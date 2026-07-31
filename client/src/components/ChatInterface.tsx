@@ -16,7 +16,6 @@ interface Message {
 
 interface ChatData {
   nome: string;
-  telefone: string;
   idade: string;
   temPlano: string;
   intencao: string;
@@ -24,8 +23,7 @@ interface ChatData {
 }
 
 const QUESTIONS = [
-  { key: "nome", prompt: "Qual é o seu NOME COMPLETO?" },
-  { key: "telefone", prompt: "Qual é seu TELEFONE com WhatsApp?" },
+  { key: "nome", prompt: "Como posso te chamar?" },
   { key: "idade", prompt: "Qual é sua IDADE?" },
   { key: "temPlano", prompt: "Você já tem um plano de saúde?", options: [{ label: "Sim", value: "sim" }, { label: "Não", value: "não" }] },
   { key: "intencao", prompt: "", options: [] }, // Dinâmico baseado em temPlano
@@ -214,7 +212,6 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
     // Montar mensagem final com todos os dados
     const whatsappMessage = `Olá Talita! Sou ${finalData.nome}. Gostaria de mais informações sobre planos de saúde. Meus dados:
-- Telefone: ${finalData.telefone}
 - Idade: ${finalData.idade}
 - Tem plano: ${finalData.temPlano}
 - Intenção: ${finalData.intencao}
@@ -225,7 +222,7 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
     const closingMessage: Message = {
       id: Date.now().toString() + "closing",
-      text: "Perfeito! 🎉 Confirmei todas as suas informações. Abrindo WhatsApp da Talita agora! 💙",
+      text: "Perfeito! 🎉 Confirmei tudo! Abrindo WhatsApp da Talita agora... 💙",
       sender: "talia",
       timestamp: new Date(),
     };
