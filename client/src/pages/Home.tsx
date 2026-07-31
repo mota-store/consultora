@@ -238,14 +238,14 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Pronto para encontrar seu plano?</h2>
           <p className="text-base md:text-lg mb-6 md:mb-8 text-white/90">
-            Converse com a Tália agora e descubra as melhores opções para você! 💙
+            Converse com a Tal<span className="font-black">IA</span> agora e descubra as melhores opções para você! 💙
           </p>
             <Button
             onClick={() => setShowChat(true)}
             size="lg"
             className="bg-white hover:bg-slate-50 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-950 text-primary font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all"
           >
-            Falar com Tália Agora 🤖
+            Falar com Tal<span className="font-black">IA</span> Agora 💙
           </Button>
         </div>
       </section>
