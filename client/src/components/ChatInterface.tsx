@@ -175,8 +175,10 @@ export default function ChatInterface({ onClose }: { onClose: () => void }) {
 
     // Criar lead na primeira mensagem
     if (currentStep === 0 && !leadId) {
+      // Extrair apenas o primeiro nome ou primeira palavra
+      const extractedName = input.split(' ')[0].trim() || input.trim();
       const result = await createLeadMutation.mutateAsync({
-        nome: input,
+        nome: extractedName,
         telefone: "",
         email: "",
       });
